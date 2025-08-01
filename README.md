@@ -3,13 +3,14 @@
 ### *SWAGGER*
 http://localhost:8000/api/schema/swagger-ui/#/
 ![0](assets/img.png)
+![1](assets/img_1.png)
 
 ### *POSTMAN*
 ![15](assets/img_15.png)
 
 # 2. Авторизация нового пользователя:
 ### *SWAGGER*
-![1](assets/img_1.png)
+
 ![2](assets/img_2.png)
 
 ### *POSTMAN*
@@ -65,11 +66,10 @@ http://localhost:8000/api/schema/swagger-ui/#/
 ![11](assets/img_11.png)
 ![12](assets/img_12.png)
 
+### *POSTMAN*
+![21](assets/img_21.png)
+
 # 12. Перевод другому пользователю при недостаточности средств:
 ### *SWAGGER*
 ![13](assets/img_13.png)
 ![14](assets/img_14.png)
-
-### *POSTMAN*
-![21](assets/img_21.png)
-
