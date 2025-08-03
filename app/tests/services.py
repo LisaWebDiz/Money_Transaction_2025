@@ -1,5 +1,8 @@
-import pytest
 from decimal import Decimal
+
+import pytest
+
+from app.models import Operation
 from app.services.replenishment import replenishment
 from app.services.transfer import transfer
 
@@ -13,7 +16,7 @@ class TestAccountOperations:
 
         user1.user_account.refresh_from_db()
         assert user1.user_account.balance == old_balance + Decimal('25.00')
-        assert op.type == 'replenishment'
+        assert op.type == Operation.REPLENISHMENT
         assert op.amount == Decimal('25.00')
         assert op.resulting_balance == user1.user_account.balance
         assert op.sender == user1
@@ -55,7 +58,7 @@ class TestAccountOperations:
         # Проверяем
         assert user1.user_account.balance == sender_balance - Decimal('30.00')
         assert user2.user_account.balance == receiver_balance + Decimal('30.00')
-        assert op.type == 'transfer'
+        assert op.type == Operation.TRANSFER
         assert op.amount == Decimal('30.00')
         assert op.resulting_balance == user1.user_account.balance
         assert op.sender == user1

@@ -6,16 +6,19 @@ from django.db import models
 
 
 class Operation(models.Model):
+    REPLENISHMENT = 1
+    TRANSFER = 2
+
     OPERATION_TYPES = [
-        ('replenishment', 'Пополнение'),
-        ('transfer', 'Перевод'),
+        (REPLENISHMENT, 'Пополнение'),
+        (TRANSFER, 'Перевод'),
     ]
 
-    sender = models.ForeignKey(User, verbose_name='Отправитель', on_delete=models.CASCADE, 
+    sender = models.ForeignKey(User, verbose_name='Отправитель', on_delete=models.CASCADE,
                                related_name='sender_operations')
     receiver = models.ForeignKey(User, verbose_name='Получатель', null=True, blank=True, on_delete=models.SET_NULL,
                                 related_name='receiver_operations')
-    type = models.CharField(max_length=20, choices=OPERATION_TYPES)
+    type = models.IntegerField(choices=OPERATION_TYPES)
     amount = models.DecimalField(verbose_name='Сумма', decimal_places=2, max_digits=20, default=0,
                                  validators=[MinValueValidator(Decimal('0.01'))])
     timestamp = models.DateTimeField(auto_now_add=True)

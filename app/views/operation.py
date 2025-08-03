@@ -14,9 +14,14 @@ from app.services.transfer import transfer
 
 
 class OperationViewSet(viewsets.ModelViewSet):
-    queryset = Operation.objects.all()
     serializer_class = OperationSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Operation.objects.filter(
+            Q(sender=user) | Q(receiver=user)
+        ).order_by('-timestamp')
 
     @extend_schema(
         summary='Мои операции',
@@ -34,6 +39,7 @@ class OperationViewSet(viewsets.ModelViewSet):
 
 
     @extend_schema(
+        summary='Пополнение в копейках',
         request=ReplenishmentSerializer,
         responses=OperationSerializer
     )

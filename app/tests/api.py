@@ -4,6 +4,8 @@ from django.urls import reverse
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
+from app.models import Operation
+
 User = get_user_model()
 
 @pytest.mark.django_db
@@ -36,7 +38,7 @@ class TestAccountAPI:
         response = self.client.post(url, data)
         assert response.status_code == 200
         assert response.data['amount'] == '0.50'
-        assert response.data['type'] == 'replenishment'
+        assert response.data['type'] == Operation.REPLENISHMENT
 
     def test_replenish_invalid_amount(self):
         url = reverse('operation-replenish')
@@ -56,7 +58,7 @@ class TestAccountAPI:
         response = self.client.post(url, data)
         assert response.status_code == 200
         assert response.data['amount'] == '30.00'
-        assert response.data['type'] == 'transfer'
+        assert response.data['type'] == Operation.TRANSFER
         assert response.data['sender'] == self.user1.id
         assert response.data['receiver'] == self.user2.id
 

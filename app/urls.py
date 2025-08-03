@@ -15,7 +15,6 @@ router.register('account', AccountViewSet, basename='account')
 router.register('operation', OperationViewSet, basename='operation')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
 
     # API v1
     path('api/v1/', include(router.urls)),

@@ -7,7 +7,7 @@ from app.models import Account, Operation
 
 @transaction.atomic
 def replenishment(user_id: int, amount: Decimal) -> Operation:
-    if amount <= 0:
+    if amount <= Decimal('0'):
         raise ValueError('Сумма пополнения должна быть больше 0')
 
     # amount в копейках → переводим в рубли
@@ -20,7 +20,7 @@ def replenishment(user_id: int, amount: Decimal) -> Operation:
     return Operation.objects.create(
         sender_id=user_id,
         receiver_id=user_id,
-        type='replenishment',
+        type=Operation.REPLENISHMENT,
         amount=amount_rub,  # сохраняем в рублях
         resulting_balance=account.balance
     )

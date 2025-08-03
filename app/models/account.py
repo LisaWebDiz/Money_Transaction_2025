@@ -6,10 +6,10 @@ from django.db import models
 
 
 class Account(models.Model):
-    user = models.OneToOneField(User, verbose_name='Держатель счета', on_delete=models.CASCADE,
+    user = models.OneToOneField(User, verbose_name='Держатель счета', on_delete=models.PROTECT,
                                 related_name='user_account')
     balance = models.DecimalField(verbose_name='Баланс счета', decimal_places=2, max_digits=20, default=0,
-                                  validators=[MinValueValidator(Decimal('0.01'))])
+                                  validators=[MinValueValidator(Decimal('0.00'))])
 
     def __str__(self):
         return f'{self.user.username}: {self.balance} руб.'
